@@ -3,7 +3,8 @@ import React, { Component } from "react";
 import "./App.css";
 import FormularioCadastro from "./Components/FormularoCadastro/FormularioCadastro";
 import "@fontsource/roboto";
-import { validarCpf, validarSenha, validarNome } from "./models/cadastro";
+import { validarCpf, validarSenha, validarNome } from "./Modelos/Cadastro";
+import ValidacoesCadasro from "./Contextos/ValidacoesCadastro";
 
 class App extends Component {
   render() {
@@ -12,10 +13,15 @@ class App extends Component {
         <Typography variant="h3" component="h1" align="center">
           Formulário de Cadastro
         </Typography>
-        <FormularioCadastro
-          aoEnviar={enviar}
-          validacoes={{ cpf: validarCpf, senha: validarSenha, nome:validarNome }}
-        />
+        <ValidacoesCadasro.Provider
+          value={{
+            cpf: validarCpf,
+            senha: validarSenha,
+            nome: validarNome,
+          }}
+        >
+          <FormularioCadastro aoEnviar={enviar} />
+        </ValidacoesCadasro.Provider>
       </Container>
     );
   }
